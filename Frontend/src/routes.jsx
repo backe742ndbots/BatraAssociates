@@ -50,8 +50,10 @@ export default function AppRoutes() {
       <Routes>
         {/* AUTH */}
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
 
         {/* ADMIN */}
+
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/properties" element={<AdminProperties />} />
         <Route path="/admin/clients" element={<AdminClients />} />
