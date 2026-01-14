@@ -139,11 +139,11 @@ export default function AdminAddProperty() {
 
     try {
       // 🔴 REQUIRED CHECK
-      if (!files.cover) {
-        alert("Cover image is required");
-        setLoading(false);
-        return;
-      }
+      // if (!files.cover) {
+      //   alert("Cover image is required");
+      //   setLoading(false);
+      //   return;
+      // }
 
       const data = new FormData();
 
