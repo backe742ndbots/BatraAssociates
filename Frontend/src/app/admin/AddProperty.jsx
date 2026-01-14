@@ -353,7 +353,7 @@ export default function AdminAddProperty() {
                 <input
                   type="file"
                   name="cover"
-                  required
+
                   onChange={handleFileChange}
                   className="input"
                 />
