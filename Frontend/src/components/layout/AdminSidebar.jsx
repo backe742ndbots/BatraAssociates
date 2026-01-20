@@ -9,6 +9,7 @@ const MENU = [
   { to: "/admin/requests", label: "Property Edit Requests", icon: "fas fa-code-branch" },
   { to: "/admin/ClientChangeRequests", label: "Client Edit Requests", icon: "fas fa-code-branch" },
   { to: "/admin/reports", label: "Reports", icon: "fas fa-chart-line" },
+  { to: "/admin/settings", label: "Settings", icon: "fas fa-chart-line" },
 ];
 
 

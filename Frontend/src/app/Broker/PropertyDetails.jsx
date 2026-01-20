@@ -9,6 +9,16 @@ export default function PropertyDetails() {
   const [pendingRequest, setPendingRequest] = useState(false);
   const [loading, setLoading] = useState(true);
 
+
+  const Field = ({ label, value }) => (
+    <div className="flex justify-between gap-4 py-2 text-sm">
+      <span className="text-slate-500">{label}</span>
+      <span className="font-medium text-right">
+        {value ?? "—"}
+      </span>
+    </div>
+  );
+
   useEffect(() => {
     api.get(`/broker/properties/${id}`).then(res => {
       setProperty(res.property);
@@ -44,13 +54,13 @@ export default function PropertyDetails() {
 
   return (
     <BrokerLayout>
-      <div className="max-w-7xl mx-auto px-4 py-10 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 py-1 space-y-12">
 
         {/* ================= HEADER ================= */}
         <header className="space-y-2">
           <Link
             to="/broker/properties"
-            className="text-sm text-slate-400 hover:text-slate-600"
+            className="text-md dark:text-slate-200 dark:hover:text-slate-300"
           >
             ← Back to Properties
           </Link>
@@ -141,6 +151,39 @@ export default function PropertyDetails() {
               </div>
             </GlassCard>
 
+
+            <GlassCard>
+              {property.customFields &&
+                Object.keys(property.customFields).length > 0 && (
+                  <section
+                    id="custom-fields"
+                    className="bg-white dark:bg-neutral-900 rounded-2xl p-6"
+                  >
+                    <h2 className="text-lg font-semibold mb-4">
+                      Newly Added Data
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-1 gap-1">
+                      {Object.entries(property.customFields).map(([key, value]) => (
+                        <Field
+                          key={key}
+                          label={key
+                            .replace(/_/g, " ")
+                            .replace(/\b\w/g, c => c.toUpperCase())}
+                          value={
+                            value === true
+                              ? "Yes"
+                              : value === false
+                                ? "No"
+                                : value || "—"
+                          }
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+            </GlassCard>
+
             {mapImage && (
               <GlassCard title="Location Map">
                 <img
@@ -157,6 +200,9 @@ export default function PropertyDetails() {
             <GlassCard title="Availability">
               <StatusBadge status={property.availabilityStatus} />
             </GlassCard>
+
+
+
 
             <GlassCard title="Dealer / Owner">
               <p className="text-sm">
@@ -178,7 +224,7 @@ export default function PropertyDetails() {
               ) : (
                 <Link
                   to={`/broker/property/${property._id}/request-edit`}
-                  className="block text-center bg-black text-white py-2 rounded-xl font-medium"
+                  className="dark:hover:bg-slate-400 block dark:text-black text-center bg-slate-300 text-white py-2 rounded-xl font-medium"
                 >
                   Request Property Change
                 </Link>

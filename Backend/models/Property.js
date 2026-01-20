@@ -152,11 +152,18 @@ const propertySchema = new mongoose.Schema(
     /* =====================
        MEDIA
     ===================== */
-    cover: { type: String, required: false },
+    cover: { type: String },
     gallery: [String],
     map: String,
     floorPlan: String,
     documents: [String],
+
+
+    customFields: {
+      type: Map,
+      of: mongoose.Schema.Types.Mixed,
+      default: {},
+    },
 
     /* =====================
        AUDIT
@@ -165,7 +172,7 @@ const propertySchema = new mongoose.Schema(
     approvedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     approvedAt: Date,
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 module.exports = mongoose.model("Property", propertySchema);

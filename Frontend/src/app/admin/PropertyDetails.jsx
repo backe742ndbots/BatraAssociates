@@ -349,11 +349,11 @@ export default function AdminPropertyDetails() {
   useEffect(() => {
     api.get(`/admin/properties/${id}`).then(res => {
       setProperty(res.property);
-      // console.log("res", res)
+      console.log("res", res)
       const cover =
         res.property.images?.find(i => i.type === "cover") ||
         res.property.images?.[0];
-      setActiveImage(property.cover);
+      setActiveImage(property?.cover);
     });
   }, [id]);
 
@@ -464,7 +464,7 @@ export default function AdminPropertyDetails() {
             label="Floor"
             value={
               property
-                ? `${property.floorNumber || property.floorInfo.floorNumber}/${property.totalFloors || property.floorInfo.totalFloors}`
+                ? `${property?.floorNumber || property?.floorInfo.floorNumber}/${property?.totalFloors || property?.floorInfo.totalFloors}`
                 : "—"
             }
           />
@@ -509,6 +509,38 @@ export default function AdminPropertyDetails() {
             Agreement copies, approvals, ownership proofs will appear here.
           </p>
         </section>
+
+
+        {property.customFields &&
+          Object.keys(property.customFields).length > 0 && (
+            <section
+              id="custom-fields"
+              className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
+            >
+              <h2 className="text-lg font-semibold mb-4">
+                Newly Added Data
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+                {Object.entries(property.customFields).map(([key, value]) => (
+                  <Field
+                    key={key}
+                    label={key
+                      .replace(/_/g, " ")
+                      .replace(/\b\w/g, c => c.toUpperCase())}
+                    value={
+                      value === true
+                        ? "Yes"
+                        : value === false
+                          ? "No"
+                          : value || "—"
+                    }
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
 
         {/* ================= ADMIN ACTIONS ================= */}
         <section className="bg-neutral-900 text-white rounded-2xl p-6 flex flex-col md:flex-row gap-4 justify-between">

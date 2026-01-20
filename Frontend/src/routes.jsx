@@ -39,6 +39,9 @@ import BrokerMatchesSection from "./app/Broker/Matches";
 import BrokerClientProfile from "./app/Broker/ClientProfile"
 import BrokerClientProfileEdit from "./app/Broker/ClientProfileEdit"
 import BrokerClientProfileRequestEdit from "./app/Broker/ClientProfileEditRequest"
+import AdminSettings from "./app/admin/AdminSettings";
+import AdminFormSettings from "./app/admin/AdminFormSettings";
+import AdminPropertyFormSettings from "./app/admin/AdminPropertyFormSettings";
 // BrokerReports
 // import AddClient from "../pages/broker/AddClient";
 // import ClientDetails from "../pages/broker/ClientDetails";
@@ -65,10 +68,13 @@ export default function AppRoutes() {
         <Route path="/admin/properties/:id" element={<AdminPropertyDetails />} />
         <Route path="/admin/property/:id/edit" element={<AdminEditProperty />} />
         <Route path="/admin/reports" element={<AdminReports />} />
+        <Route path="/admin/settings" element={<AdminSettings />} />
+        <Route path="/admin/settings/forms" element={<AdminFormSettings />} />
+        <Route path="/admin/settings/forms/property" element={<AdminPropertyFormSettings />} />
         <Route path="/admin/ClientChangeRequests" element={<AdminClientChangeRequests />} />
         <Route path="/admin/client-change-requests/:id" element={<AdminClientChangeForm />} />
 
-
+        /admin/settings
 
         {/* BROKER */}
         {/* DASHBOARD */}

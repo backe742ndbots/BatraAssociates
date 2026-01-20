@@ -35,7 +35,8 @@ app.use(
       credentials: true
    })
 );
-
+//  "http://localhost:5173" ||
+// "https://batra-associates-ba.vercel.app" ||
 /* =======================
    STATIC FILES
 ======================= */

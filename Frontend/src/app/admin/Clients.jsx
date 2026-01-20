@@ -18,7 +18,7 @@ function StatusBadge({ status }) {
     <span
       className={`
         inline-flex items-center justify-center
-         min-w-[32px]
+         max-w-[32px]
         px-3 py-2
         rounded-full
         text-xs font-semibold capitalize
