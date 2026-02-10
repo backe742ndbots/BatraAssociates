@@ -308,6 +308,263 @@
 
 
 
+// import { useEffect, useState } from "react";
+// import { useParams } from "react-router-dom";
+// import AdminLayout from "../../components/layout/AdminLayout";
+// import api from "../../services/api";
+
+// /* ===============================
+//    SMALL UI BLOCKS
+// ================================ */
+
+// const Stat = ({ label, value }) => (
+//   <div className="rounded-xl bg-white dark:bg-neutral-900 border p-4">
+//     <p className="text-xs uppercase tracking-wide text-slate-500">
+//       {label}
+//     </p>
+//     <p className="mt-1 text-xl font-semibold">
+//       {value ?? "—"}
+//     </p>
+//   </div>
+// );
+
+// const Field = ({ label, value }) => (
+//   <div className="flex justify-between gap-4 py-2 text-sm">
+//     <span className="text-slate-500">{label}</span>
+//     <span className="font-medium text-right">
+//       {value ?? "—"}
+//     </span>
+//   </div>
+// );
+
+// /* ===============================
+//    MAIN
+// ================================ */
+
+// export default function AdminPropertyDetails() {
+//   const { id } = useParams();
+//   const [property, setProperty] = useState(null);
+//   const [activeImage, setActiveImage] = useState(null);
+
+//   useEffect(() => {
+//     api.get(`/admin/properties/${id}`).then(res => {
+//       setProperty(res.property);
+//       console.log("res", res)
+//       const cover =
+//         res.property.images?.find(i => i.type === "cover") ||
+//         res.property.images?.[0];
+//       setActiveImage(property?.cover);
+//     });
+//   }, [id]);
+
+//   if (!property) {
+//     return (
+//       <AdminLayout>
+//         <div className="p-10 text-center text-slate-500">
+//           Loading property…
+//         </div>
+//       </AdminLayout>
+//     );
+//   }
+
+//   const address = [
+//     property.location?.address,
+//     property.location?.sector,
+//     property.location?.city
+//   ].filter(Boolean).join(", ");
+
+//   return (
+//     <AdminLayout>
+//       <div className="max-w-7xl mx-auto px-4 space-y-10">
+
+//         {/* ================= IMAGE PREVIEW ================= */}
+//         <section className="space-y-4">
+//           <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-slate-200 dark:bg-neutral-800">
+//             {activeImage || '' ? (
+//               <img
+//                 src={property.cover}
+//                 alt={property.propertyName}
+//                 className="w-full h-full object-cover"
+//               />
+//             ) : (
+//               <div className="flex items-center justify-center h-full text-slate-400">
+//                 No image available
+//               </div>
+//             )}
+//           </div>
+
+//           {/* THUMBNAILS */}
+//           {property.gallery?.length > 1 && (
+//             <div className="flex gap-3 overflow-x-auto">
+//               {property.gallery.map((img, i) => (
+//                 <button
+//                   key={i}
+//                   onClick={() => setActiveImage(img)}
+//                   className={`
+//                     w-28 h-20 rounded-lg overflow-hidden border
+//                     ${activeImage === img
+//                       ? "border-black dark:border-white"
+//                       : "border-slate-200 dark:border-neutral-700"}
+//                   `}
+//                 >
+//                   <img
+//                     src={img}
+//                     alt=""
+//                     className="w-full h-full object-cover"
+//                   />
+//                 </button>
+//               ))}
+//             </div>
+//           )}
+//         </section>
+
+//         {/* ================= HEADER ================= */}
+//         <header className="space-y-1">
+//           <h1 className="text-2xl font-semibold">
+//             {property.propertyName}
+//           </h1>
+//           <p className="text-sm text-slate-500">
+//             {property.category} · {address}
+//           </p>
+//         </header>
+
+//         {/* ================= STICKY TABS ================= */}
+//         <div className="sticky top-16 z-20 bg-background py-2">
+//           <div className="flex gap-6 text-sm font-medium text-slate-500">
+//             {["Overview", "Details", "Amenities", "Dealer", "Documents"].map(t => (
+//               <a
+//                 key={t}
+//                 href={`#${t}`}
+//                 className="hover:text-black dark:hover:text-white"
+//               >
+//                 {t}
+//               </a>
+//             ))}
+//           </div>
+//         </div>
+
+//         {/* ================= OVERVIEW ================= */}
+//         <section id="Overview" className="grid grid-cols-2 md:grid-cols-4 gap-4">
+//           <Stat label="Price" value={`₹ ${property.priceLakhs} L`} />
+//           <Stat label="Area" value={`${property.areaSqFt} sq.ft`} />
+//           <Stat label="BHK" value={property.bhk} />
+//           <Stat label="Status" value={property.availabilityStatus} />
+//         </section>
+
+//         {/* ================= DETAILS ================= */}
+//         <section
+//           id="Details"
+//           className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
+//         >
+//           <h2 className="text-lg font-semibold mb-4">Property Details</h2>
+//           <Field label="Facing" value={property.facing} />
+//           <Field label="Furnishing" value={property.furnishing} />
+//           <Field label="Ownership" value={property.propertyTitle} />
+//           <Field
+//             label="Floor"
+//             value={
+//               property
+//                 ? `${property?.floorNumber || property?.floorInfo.floorNumber}`
+//                 : "—"
+//             }
+//           />
+//         </section>
+
+//         {/* ================= AMENITIES ================= */}
+//         <section id="Amenities">
+//           <h2 className="text-lg font-semibold mb-3">Amenities</h2>
+//           <div className="flex flex-wrap gap-2">
+//             {Object.entries(property.amenities || {})
+//               .filter(([, v]) => v)
+//               .map(([k]) => (
+//                 <span
+//                   key={k}
+//                   className="px-3 py-1 rounded-full text-xs bg-slate-100 dark:bg-neutral-800"
+//                 >
+//                   {k.replace(/([A-Z])/g, " $1")}
+//                 </span>
+//               ))}
+//           </div>
+//         </section>
+
+//         {/* ================= DEALER ================= */}
+//         <section
+//           id="Dealer"
+//           className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
+//         >
+//           <h2 className="text-lg font-semibold mb-4">Dealer / Owner</h2>
+//           <Field label="Type" value={property.dealer?.type} />
+//           <Field label="Name" value={property.dealer?.name} />
+//           <Field label="Mobile" value={property.dealer?.mobile} />
+//           <Field label="Source" value={property.dealer?.source} />
+//         </section>
+
+//         {/* ================= DOCUMENTS ================= */}
+//         <section
+//           id="Documents"
+//           className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
+//         >
+//           <h2 className="text-lg font-semibold mb-2">Documents</h2>
+//           <p className="text-sm text-slate-500">
+//             Agreement copies, approvals, ownership proofs will appear here.
+//           </p>
+//         </section>
+
+
+//         {property.customFields &&
+//           Object.keys(property.customFields).length > 0 && (
+//             <section
+//               id="custom-fields"
+//               className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
+//             >
+//               <h2 className="text-lg font-semibold mb-4">
+//                 Newly Added Data
+//               </h2>
+
+//               <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+//                 {Object.entries(property.customFields).map(([key, value]) => (
+//                   <Field
+//                     key={key}
+//                     label={key
+//                       .replace(/_/g, " ")
+//                       .replace(/\b\w/g, c => c.toUpperCase())}
+//                     value={
+//                       value === true
+//                         ? "Yes"
+//                         : value === false
+//                           ? "No"
+//                           : value || "—"
+//                     }
+//                   />
+//                 ))}
+//               </div>
+//             </section>
+//           )}
+
+
+//         {/* ================= ADMIN ACTIONS ================= */}
+//         <section className="bg-neutral-900 text-white rounded-2xl p-6 flex flex-col md:flex-row gap-4 justify-between">
+//           <p className="text-sm">
+//             Administrative Actions
+//           </p>
+//           <div className="flex gap-3">
+//             <button className="px-4 py-2 rounded bg-white text-black text-sm">
+//               Edit Property
+//             </button>
+//             <button className="px-4 py-2 rounded border border-white/30 text-sm">
+//               Change Status
+//             </button>
+//           </div>
+//         </section>
+
+//       </div>
+//     </AdminLayout>
+//   );
+// }
+
+
+
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AdminLayout from "../../components/layout/AdminLayout";
@@ -317,25 +574,33 @@ import api from "../../services/api";
    SMALL UI BLOCKS
 ================================ */
 
-const Stat = ({ label, value }) => (
-  <div className="rounded-xl bg-white dark:bg-neutral-900 border p-4">
-    <p className="text-xs uppercase tracking-wide text-slate-500">
-      {label}
-    </p>
-    <p className="mt-1 text-xl font-semibold">
-      {value ?? "—"}
-    </p>
-  </div>
-);
+const Stat = ({ label, value }) => {
+  if (value === null || value === undefined || value === "") return null;
 
-const Field = ({ label, value }) => (
-  <div className="flex justify-between gap-4 py-2 text-sm">
-    <span className="text-slate-500">{label}</span>
-    <span className="font-medium text-right">
-      {value ?? "—"}
-    </span>
-  </div>
-);
+  return (
+    <div className="rounded-xl bg-white dark:bg-neutral-900 border p-4">
+      <p className="text-xs uppercase tracking-wide text-slate-500">
+        {label}
+      </p>
+      <p className="mt-1 text-xl font-semibold">
+        {value}
+      </p>
+    </div>
+  );
+};
+
+const Field = ({ label, value }) => {
+  if (value === null || value === undefined || value === "") return null;
+
+  return (
+    <div className="flex justify-between gap-4 py-2 text-sm">
+      <span className="text-slate-500">{label}</span>
+      <span className="font-medium text-right">
+        {value}
+      </span>
+    </div>
+  );
+};
 
 /* ===============================
    MAIN
@@ -347,13 +612,10 @@ export default function AdminPropertyDetails() {
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    api.get(`/admin/properties/${id}`).then(res => {
-      setProperty(res.property);
-      // console.log("res", res)
-      const cover =
-        res.property.images?.find(i => i.type === "cover") ||
-        res.property.images?.[0];
-      setActiveImage(property?.cover);
+    api.get(`/admin/properties/${id}`).then((res) => {
+      const p = res.property;
+      setProperty(p);
+      setActiveImage(p.cover || p.gallery?.[0] || null);
     });
   }, [id]);
 
@@ -367,11 +629,14 @@ export default function AdminPropertyDetails() {
     );
   }
 
-  const address = [
-    property.location?.address,
-    property.location?.sector,
-    property.location?.city
-  ].filter(Boolean).join(", ");
+  const addressParts = [
+    property.location?.plotNumber,
+    property.location?.block,
+    property.location?.sector && `Sector ${property.location.sector}`,
+    property.location?.city,
+  ].filter(Boolean);
+
+  const address = addressParts.join(", ");
 
   return (
     <AdminLayout>
@@ -380,9 +645,9 @@ export default function AdminPropertyDetails() {
         {/* ================= IMAGE PREVIEW ================= */}
         <section className="space-y-4">
           <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-slate-200 dark:bg-neutral-800">
-            {activeImage || '' ? (
+            {activeImage ? (
               <img
-                src={property.cover}
+                src={activeImage}
                 alt={property.propertyName}
                 className="w-full h-full object-cover"
               />
@@ -393,7 +658,6 @@ export default function AdminPropertyDetails() {
             )}
           </div>
 
-          {/* THUMBNAILS */}
           {property.gallery?.length > 1 && (
             <div className="flex gap-3 overflow-x-auto">
               {property.gallery.map((img, i) => (
@@ -420,35 +684,63 @@ export default function AdminPropertyDetails() {
 
         {/* ================= HEADER ================= */}
         <header className="space-y-1">
-          <h1 className="text-2xl font-semibold">
-            {property.propertyName}
-          </h1>
-          <p className="text-sm text-slate-500">
-            {property.category} · {address}
-          </p>
+          {property.propertyName && (
+            <h1 className="text-2xl font-semibold">
+              {property.propertyName}
+            </h1>
+          )}
+
+          {(property.category || address) && (
+            <p className="text-sm text-slate-500">
+              {property.category}
+              {address && ` · ${address}`}
+            </p>
+          )}
         </header>
 
         {/* ================= STICKY TABS ================= */}
         <div className="sticky top-16 z-20 bg-background py-2">
           <div className="flex gap-6 text-sm font-medium text-slate-500">
-            {["Overview", "Details", "Amenities", "Dealer", "Documents"].map(t => (
-              <a
-                key={t}
-                href={`#${t}`}
-                className="hover:text-black dark:hover:text-white"
-              >
-                {t}
-              </a>
-            ))}
+            {["Overview", "Details", "Amenities", "Dealer", "Documents"].map(
+              (t) => (
+                <a
+                  key={t}
+                  href={`#${t}`}
+                  className="hover:text-black dark:hover:text-white"
+                >
+                  {t}
+                </a>
+              )
+            )}
           </div>
         </div>
 
         {/* ================= OVERVIEW ================= */}
-        <section id="Overview" className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Stat label="Price" value={`₹ ${property.priceLakhs} L`} />
-          <Stat label="Area" value={`${property.areaSqFt} sq.ft`} />
-          <Stat label="BHK" value={property.bhk} />
-          <Stat label="Status" value={property.availabilityStatus} />
+        <section
+          id="Overview"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        >
+          <Stat
+            label="Price"
+            value={
+              property.pricing?.askingRaw
+                ? `₹ ${property.pricing.askingRaw} L`
+                : null
+            }
+          />
+          <Stat
+            label="Area"
+            value={
+              property.customFields?.AREA
+                ? `${property.customFields.AREA} sq.ft`
+                : null
+            }
+          />
+          <Stat label="BHK" value={property.bhk || property.bhkRaw} />
+          <Stat
+            label="Status"
+            value={property.availabilityStatus}
+          />
         </section>
 
         {/* ================= DETAILS ================= */}
@@ -457,47 +749,51 @@ export default function AdminPropertyDetails() {
           className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
         >
           <h2 className="text-lg font-semibold mb-4">Property Details</h2>
+
+          <Field label="Property Code" value={property.propertyCode} />
+          <Field label="Property Type" value={property.propertyType?.replace("_", " ")} />
           <Field label="Facing" value={property.facing} />
           <Field label="Furnishing" value={property.furnishing} />
           <Field label="Ownership" value={property.propertyTitle} />
-          <Field
-            label="Floor"
-            value={
-              property
-                ? `${property?.floorNumber || property?.floorInfo.floorNumber}/${property?.totalFloors || property?.floorInfo.totalFloors}`
-                : "—"
-            }
-          />
+          <Field label="Floor Info" value={property.customFields?.FLR} />
+          <Field label="Road" value={property.location?.road} />
         </section>
 
         {/* ================= AMENITIES ================= */}
-        <section id="Amenities">
-          <h2 className="text-lg font-semibold mb-3">Amenities</h2>
-          <div className="flex flex-wrap gap-2">
-            {Object.entries(property.amenities || {})
-              .filter(([, v]) => v)
-              .map(([k]) => (
-                <span
-                  key={k}
-                  className="px-3 py-1 rounded-full text-xs bg-slate-100 dark:bg-neutral-800"
-                >
-                  {k.replace(/([A-Z])/g, " $1")}
-                </span>
-              ))}
-          </div>
-        </section>
+        {property.amenities &&
+          Object.values(property.amenities).some(Boolean) && (
+            <section id="Amenities">
+              <h2 className="text-lg font-semibold mb-3">Amenities</h2>
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(property.amenities)
+                  .filter(([, v]) => v)
+                  .map(([k]) => (
+                    <span
+                      key={k}
+                      className="px-3 py-1 rounded-full text-xs bg-slate-100 dark:bg-neutral-800"
+                    >
+                      {k.replace(/([A-Z])/g, " $1")}
+                    </span>
+                  ))}
+              </div>
+            </section>
+          )}
 
         {/* ================= DEALER ================= */}
-        <section
-          id="Dealer"
-          className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
-        >
-          <h2 className="text-lg font-semibold mb-4">Dealer / Owner</h2>
-          <Field label="Type" value={property.dealer?.type} />
-          <Field label="Name" value={property.dealer?.name} />
-          <Field label="Mobile" value={property.dealer?.mobile} />
-          <Field label="Source" value={property.dealer?.source} />
-        </section>
+        {(property.dealer?.name ||
+          property.dealer?.mobile ||
+          property.dealer?.office) && (
+            <section
+              id="Dealer"
+              className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
+            >
+              <h2 className="text-lg font-semibold mb-4">Dealer / Owner</h2>
+              <Field label="Type" value={property.dealer?.type} />
+              <Field label="Name" value={property.dealer?.name} />
+              <Field label="Mobile" value={property.dealer?.mobile} />
+              <Field label="Office / Source" value={property.dealer?.office} />
+            </section>
+          )}
 
         {/* ================= DOCUMENTS ================= */}
         <section
@@ -510,43 +806,42 @@ export default function AdminPropertyDetails() {
           </p>
         </section>
 
-
+        {/* ================= RAW CSV DATA ================= */}
         {property.customFields &&
-          Object.keys(property.customFields).length > 0 && (
+          Object.values(property.customFields).some(Boolean) && (
             <section
               id="custom-fields"
               className="bg-white dark:bg-neutral-900 border rounded-2xl p-6"
             >
               <h2 className="text-lg font-semibold mb-4">
-                Newly Added Data
+                Some more Data
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-                {Object.entries(property.customFields).map(([key, value]) => (
-                  <Field
-                    key={key}
-                    label={key
-                      .replace(/_/g, " ")
-                      .replace(/\b\w/g, c => c.toUpperCase())}
-                    value={
-                      value === true
-                        ? "Yes"
-                        : value === false
-                          ? "No"
-                          : value || "—"
-                    }
-                  />
-                ))}
+              <div className="grid grid-cols-1 gap-4">
+                {Object.entries(property.customFields)
+                  .filter(([, v]) => v !== null && v !== "")
+                  .map(([key, value]) => (
+                    <Field
+                      key={key}
+                      label={key
+                        .replace(/_/g, " ")
+                        .replace(/\b\w/g, (c) => c.toUpperCase())}
+                      value={
+                        value === true
+                          ? "Yes"
+                          : value === false
+                            ? "No"
+                            : value
+                      }
+                    />
+                  ))}
               </div>
             </section>
           )}
 
-
         {/* ================= ADMIN ACTIONS ================= */}
         <section className="bg-neutral-900 text-white rounded-2xl p-6 flex flex-col md:flex-row gap-4 justify-between">
-          <p className="text-sm">
-            Administrative Actions
-          </p>
+          <p className="text-sm">Administrative Actions</p>
           <div className="flex gap-3">
             <button className="px-4 py-2 rounded bg-white text-black text-sm">
               Edit Property
