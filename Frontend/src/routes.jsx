@@ -4,6 +4,14 @@ import Login from "./app/auth/login";
 
 import AdminDashboard from "./app/admin/Dashboard";
 import AdminProperties from "./app/admin/Properties";
+import AdminDealers from "./app/admin/Dealers";
+import AdminExtentions from "./app/admin/Extentions";
+import AdminFlats from "./app/admin/Flats";
+import AdminFloors from "./app/admin/Floors";
+// import AdminKothi from "./app/admin/Kothi";
+// import AdminMCD from "./app/admin/MCD";
+// import AdminParties from "./app/admin/Parties";
+// import AdminRentAts from "./app/admin/RentAts";
 
 import BrokerDashboard from "./app/Broker/Dashboard";
 import AdminClients from "./app/admin/Clients";
@@ -59,6 +67,11 @@ export default function AppRoutes() {
 
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/properties" element={<AdminProperties />} />
+        <Route path="/admin/dealers" element={<AdminDealers />} />
+        <Route path="/admin/extention" element={<AdminExtentions />} />
+        <Route path="/admin/flats" element={<AdminFlats />} />
+        <Route path="/admin/floors" element={<AdminFloors />} />
+
         <Route path="/admin/clients" element={<AdminClients />} />
         <Route path="/admin/client/:id" element={<AdminClientDetails />} />
         <Route path="/admin/brokers" element={<AdminBrokers />} />
