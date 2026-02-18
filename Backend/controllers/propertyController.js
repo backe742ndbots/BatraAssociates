@@ -301,15 +301,69 @@ exports.getAllFloorsAdmin = async (req, res) => {
     });
   }
 };
+// exports.getFloorMeta = async (req, res) => {
+//   try {
+//     const meta = await Floor.aggregate([
+//       {
+//         $group: {
+//           _id: null,
+//           blocks: { $addToSet: "$block" },
+//           pockets: { $addToSet: "$pocket" },
+//           sectors: { $addToSet: "$sector" },
+//           bhk: { $addToSet: "$bhk" },
+//           floor: { $addToSet: "$floor" },
+//           status: { $addToSet: "$status" },
+//           category: { $addToSet: "$category" },
+//           road: { $addToSet: "$road" },
+//           facing: { $addToSet: "$facing" },
+//           dealerType: { $addToSet: "$dealerType" },
+//           source: { $addToSet: "$source" },
+//           city: { $addToSet: "$city" },
+//            oldNew: { $addToSet: "$oldNew" },
+
+
+       
+//         }
+//       }
+//     ]);
+
+//     if (!meta.length) {
+//       return res.status(200).json({
+//         success: true,
+//         filters: {}
+//       });
+//     }
+
+//     // Remove null / undefined values
+//     const clean = {};
+//     Object.keys(meta[0]).forEach(key => {
+//       if (key !== "_id") {
+//         clean[key] = meta[0][key].filter(v => v !== null && v !== undefined);
+//       }
+//     });
+
+//     return res.status(200).json({
+//       success: true,
+//       filters: clean
+//     });
+
+//   } catch (err) {
+//     console.error("FLOOR META ERROR:", err);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Failed to fetch floor filters"
+//     });
+//   }
+// };
 exports.getFloorMeta = async (req, res) => {
   try {
     const meta = await Floor.aggregate([
       {
         $group: {
           _id: null,
-          blocks: { $addToSet: "$block" },
-          pockets: { $addToSet: "$pocket" },
-          sectors: { $addToSet: "$sector" },
+          block: { $addToSet: "$block" },
+          pocket: { $addToSet: "$pocket" },
+          sector: { $addToSet: "$sector" },
           bhk: { $addToSet: "$bhk" },
           floor: { $addToSet: "$floor" },
           status: { $addToSet: "$status" },
@@ -319,10 +373,7 @@ exports.getFloorMeta = async (req, res) => {
           dealerType: { $addToSet: "$dealerType" },
           source: { $addToSet: "$source" },
           city: { $addToSet: "$city" },
-           oldNew: { $addToSet: "$oldNew" },
-
-
-       
+          oldNew: { $addToSet: "$oldNew" }
         }
       }
     ]);
@@ -334,11 +385,12 @@ exports.getFloorMeta = async (req, res) => {
       });
     }
 
-    // Remove null / undefined values
     const clean = {};
     Object.keys(meta[0]).forEach(key => {
       if (key !== "_id") {
-        clean[key] = meta[0][key].filter(v => v !== null && v !== undefined);
+        clean[key] = meta[0][key].filter(
+          v => v !== null && v !== undefined && v !== ""
+        );
       }
     });
 
@@ -474,6 +526,7 @@ exports.getMCDMeta = async (req, res) => {
 exports.getAllPartiesAdmin = async (req, res) => {
   try {
     const parties = await Party.find().sort({ createdAt: -1 });
+    // console.log("GET ALL PARTIES - COUNT:", parties[0].clientName); // DEBUG LOG
 
     return res.status(200).json({
       success: true,

@@ -17,6 +17,7 @@ require("./configs/dbs")
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
 const brokerRoutes = require("./routes/broker");
+const shareListing = require("./routes/sharedListings");
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/broker", brokerRoutes);
+app.use("/api/shared-listings", shareListing);
 
 /* =======================
    HEALTH CHECK
