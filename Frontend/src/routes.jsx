@@ -6,7 +6,7 @@ import AdminDashboard from "./app/admin/Dashboard";
 import AdminProperties from "./app/admin/Properties";
 import AdminDealers from "./app/admin/Dealers";
 import AdminExtentions from "./app/admin/Extentions";
-import AdminFlats from "./app/admin/Flats";
+import AdminFlats from "./app/admin/Flats1";
 import AdminFloors from "./app/admin/Floors";
 import AdminKothi from "./app/admin/Kothis";
 import AdminMCD from "./app/admin/MCD";
