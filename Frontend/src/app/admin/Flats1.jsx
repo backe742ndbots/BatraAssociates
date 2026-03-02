@@ -130,52 +130,97 @@ export default function ExcelViewer() {
     fetchSheets();
   }, []);
 
-  const fetchSheets = async () => {
-    try {
-       const res = await api.get("/excel/sheets");
-       const result = res.data;
+  // const fetchSheets = async () => {
+  //   try {
+  //     const res = await fetch(
+  //       "http://localhost:5000/api/excel/sheets"
+  //     );
+  //     const result = await res.json();
 
-      if (result.sheets && result.sheets.length > 0) {
-        setSheetNames(result.sheets);
-        setActiveSheet(result.sheets[0]);
-        loadSheet(result.sheets[0]);
-      }
-    } catch (err) {
-      console.error("Sheet fetch error:", err);
+  //     if (result.sheets && result.sheets.length > 0) {
+  //       setSheetNames(result.sheets);
+  //       setActiveSheet(result.sheets[0]);
+  //       loadSheet(result.sheets[0]);
+  //     }
+  //   } catch (err) {
+  //     console.error("Sheet fetch error:", err);
+  //   }
+  // };
+
+
+  const fetchSheets = async () => {
+  try {
+    const res = await api.get("/excel/sheets");
+
+    const result = res.data;   // ✅ important
+
+    if (result && result.sheets && result.sheets.length > 0) {
+      setSheetNames(result.sheets);
+      setActiveSheet(result.sheets[0]);
+      loadSheet(result.sheets[0]);
     }
-  };
+  } catch (err) {
+    console.error("Sheet fetch error:", err);
+  }
+};
+  // const loadSheet = async (sheet) => {
+  //   try {
+  //     const res = await fetch(
+  //       `http://localhost:5000/api/excel/excel-data/${sheet}`
+  //     );
+  //     const result = await res.json();
+
+  //     setData(result.data || []);
+  //     setActiveSheet(sheet);
+  //   } catch (err) {
+  //     console.error("Load sheet error:", err);
+  //   }
+  // };
 
   const loadSheet = async (sheet) => {
-    try {
-      const res = await fetch(
-        `http://localhost:5000/api/excel/excel-data/${sheet}`
-      );
-      const result = await res.json();
+  try {
+    const { data: result } = await api.get(
+      `/excel/excel-data/${sheet}`
+    );
 
-      setData(result.data || []);
-      setActiveSheet(sheet);
-    } catch (err) {
-      console.error("Load sheet error:", err);
-    }
-  };
+    setData(result?.data || []);
+    setActiveSheet(sheet);
+  } catch (err) {
+    console.error("Load sheet error:", err);
+  }
+};
+
+  // const saveSheet = async () => {
+  //   try {
+  //     await fetch(
+  //       `http://localhost:5000/api/excel/excel-data/${activeSheet}`,
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ data }),
+  //       }
+  //     );
+
+  //     alert("Saved permanently ✅");
+  //   } catch (err) {
+  //     console.error("Save error:", err);
+  //     alert("Save failed ❌");
+  //   }
+  // };
 
   const saveSheet = async () => {
-    try {
-      await fetch(
-        `http://localhost:5000/api/excel/excel-data/${activeSheet}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data }),
-        }
-      );
+  try {
+    await api.post(
+      `/excel/excel-data/${activeSheet}`,
+      { data }   // body goes here automatically as JSON
+    );
 
-      alert("Saved permanently ✅");
-    } catch (err) {
-      console.error("Save error:", err);
-      alert("Save failed ❌");
-    }
-  };
+    alert("Saved permanently ✅");
+  } catch (err) {
+    console.error("Save error:", err);
+    alert("Save failed ❌");
+  }
+};
 
   return (
     <AdminLayout>
