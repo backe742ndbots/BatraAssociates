@@ -133,7 +133,7 @@ export default function ExcelViewer() {
   // const fetchSheets = async () => {
   //   try {
   //     const res = await fetch(
-  //       "http://localhost:5000/api/excel/sheets"
+  //       "https://batraassociates.onrender.com/api/excel/sheets"
   //     );
   //     const result = await res.json();
 
@@ -152,7 +152,7 @@ export default function ExcelViewer() {
   try {
     const res = await api.get("/excel/sheets");
 
-    const result = res.data;   // ✅ important
+    const result = res;   // ✅ important
 
     if (result && result.sheets && result.sheets.length > 0) {
       setSheetNames(result.sheets);
@@ -166,7 +166,7 @@ export default function ExcelViewer() {
   // const loadSheet = async (sheet) => {
   //   try {
   //     const res = await fetch(
-  //       `http://localhost:5000/api/excel/excel-data/${sheet}`
+  //       `https://batra-backend.onrender.com/api/excel/excel-data/${sheet}`
   //     );
   //     const result = await res.json();
 
@@ -183,7 +183,7 @@ export default function ExcelViewer() {
       `/excel/excel-data/${sheet}`
     );
 
-    setData(result?.data || []);
+    setData(result || []);
     setActiveSheet(sheet);
   } catch (err) {
     console.error("Load sheet error:", err);
@@ -193,7 +193,7 @@ export default function ExcelViewer() {
   // const saveSheet = async () => {
   //   try {
   //     await fetch(
-  //       `http://localhost:5000/api/excel/excel-data/${activeSheet}`,
+  //       `https://batra-backend.onrender.com/api/excel/excel-data/${activeSheet}`,
   //       {
   //         method: "POST",
   //         headers: { "Content-Type": "application/json" },
