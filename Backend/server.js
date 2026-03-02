@@ -4,7 +4,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
-
+const excelRoutes = require("./routes/excel");
 // Load env
 dotenv.config();
 
@@ -24,8 +24,8 @@ const app = express();
 /* =======================
    CORE MIDDLEWARE
 ======================= */
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 /* =======================
    CORS (THIS FIXES NETWORK ERROR)
@@ -68,7 +68,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/broker", brokerRoutes);
 app.use("/api/shared-listings", shareListing);
-
+app.use("/api/excel", excelRoutes);
 /* =======================
    HEALTH CHECK
 ======================= */
