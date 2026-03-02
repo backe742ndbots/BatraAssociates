@@ -133,7 +133,7 @@ export default function ExcelViewer() {
   const fetchSheets = async () => {
     try {
        const res = await api.get("/excel/sheets");
-      const result = await res.json();
+       const result = res.data;
 
       if (result.sheets && result.sheets.length > 0) {
         setSheetNames(result.sheets);
