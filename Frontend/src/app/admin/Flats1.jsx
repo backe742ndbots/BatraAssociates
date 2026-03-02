@@ -118,7 +118,7 @@ import { registerAllModules } from "handsontable/registry";
 import "handsontable/dist/handsontable.full.css";
 import AdminLayout from "../../components/layout/AdminLayout";
 import SectionHeader from "./components/SectionHeader";
-
+import api from "../../services/api";
 registerAllModules();
 
 export default function ExcelViewer() {
@@ -132,9 +132,7 @@ export default function ExcelViewer() {
 
   const fetchSheets = async () => {
     try {
-      const res = await fetch(
-        "http://localhost:5000/api/excel/sheets"
-      );
+       const res = await api.get("/excel/sheets");
       const result = await res.json();
 
       if (result.sheets && result.sheets.length > 0) {
