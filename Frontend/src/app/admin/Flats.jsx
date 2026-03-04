@@ -265,7 +265,7 @@ import api from "../../services/api";
 import AdminLayout from "../../components/layout/AdminLayout";
 import SectionHeader from "./components/SectionHeader";
 import { useNavigate } from "react-router-dom";
-
+import BrokerLayout from "../../components/layout/BrokerLayout";
 export default function Flats() {
   const type = "flats";
   const navigate = useNavigate();
@@ -340,7 +340,7 @@ export default function Flats() {
   };
 
   return (
-    <AdminLayout>
+    <BrokerLayout>
       <SectionHeader
         title="Flats"
         subtitle="Flat property listings"
@@ -539,6 +539,6 @@ export default function Flats() {
           BackendBots
         </span>
       </p>
-    </AdminLayout>
+    </BrokerLayout>
   );
 }

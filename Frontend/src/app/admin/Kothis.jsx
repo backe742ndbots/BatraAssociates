@@ -226,7 +226,7 @@ import api from "../../services/api";
 import AdminLayout from "../../components/layout/AdminLayout";
 import SectionHeader from "./components/SectionHeader";
 import { useNavigate } from "react-router-dom";
-
+import BrokerLayout from "../../components/layout/BrokerLayout";
 export default function Kothis() {
   const type = "kothi";
   const navigate = useNavigate();
@@ -289,7 +289,7 @@ export default function Kothis() {
   };
 
   return (
-    <AdminLayout>
+    <BrokerLayout>
       <SectionHeader
         title="Kothis"
         subtitle="Independent house listings"
@@ -495,6 +495,6 @@ export default function Kothis() {
           BackendBots
         </span>
       </p>
-    </AdminLayout>
+    </BrokerLayout>
   );
 }

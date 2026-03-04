@@ -319,7 +319,7 @@ import api from "../../services/api";
 import AdminLayout from "../../components/layout/AdminLayout";
 import SectionHeader from "./components/SectionHeader";
 import { useNavigate } from "react-router-dom";
-
+import BrokerLayout from "../../components/layout/BrokerLayout";
 export default function Floors() {
   const type = "floor";
   const navigate = useNavigate();
@@ -397,7 +397,7 @@ export default function Floors() {
   };
 
   return (
-    <AdminLayout>
+    <BrokerLayout>
       <SectionHeader
         title="Floors"
         subtitle="Builder floor listings"
@@ -605,6 +605,6 @@ export default function Floors() {
           ))}
         </div>
       )}
-    </AdminLayout>
+    </BrokerLayout>
   );
 }

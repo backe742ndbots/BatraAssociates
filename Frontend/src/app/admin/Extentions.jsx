@@ -272,7 +272,7 @@ import api from "../../services/api";
 import AdminLayout from "../../components/layout/AdminLayout";
 import SectionHeader from "./components/SectionHeader";
 import { useNavigate } from "react-router-dom";
-
+import BrokerLayout from "../../components/layout/BrokerLayout";
 export default function Extentions() {
   const type = "extentions";
   const navigate = useNavigate();
@@ -351,7 +351,7 @@ export default function Extentions() {
   };
 
   return (
-    <AdminLayout>
+    <BrokerLayout>
       <SectionHeader
         title="Extentions"
         subtitle="Extention property listings"
@@ -553,6 +553,6 @@ export default function Extentions() {
           BackendBots
         </span>
       </p>
-    </AdminLayout>
+    </BrokerLayout>
   );
 }

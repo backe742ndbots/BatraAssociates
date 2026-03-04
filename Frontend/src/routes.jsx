@@ -6,7 +6,8 @@ import AdminDashboard from "./app/admin/Dashboard";
 import AdminProperties from "./app/admin/Properties";
 import AdminDealers from "./app/admin/Dealers";
 import AdminExtentions from "./app/admin/Extentions";
-import AdminFlats from "./app/admin/Flats1";
+import AdminFlats from "./app/admin/Flats";
+import AdminData from "./app/admin/Flats1";
 import AdminFloors from "./app/admin/Floors";
 import AdminKothi from "./app/admin/Kothis";
 import AdminMCD from "./app/admin/MCD";
@@ -72,6 +73,7 @@ export default function AppRoutes() {
         <Route path="/admin/dealers" element={<AdminDealers />} />
         <Route path="/admin/extention" element={<AdminExtentions />} />
         <Route path="/admin/flats" element={<AdminFlats />} />
+        <Route path="/admin/data" element={<AdminData />} />
         <Route path="/admin/floors" element={<AdminFloors />} />
         <Route path="/admin/kothi" element={<AdminKothi />} />
         <Route path="/admin/mcd" element={<AdminMCD />} />

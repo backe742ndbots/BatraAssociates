@@ -2,6 +2,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../../../services/api";
 
 const MENU = [
+    // { to: "/admin/properties", label: "Properties", icon: "fas fa-building" },
+  { to: "/admin/dealers", label: "Dealers", icon: "fas fa-building" },
+  { to: "/admin/extention", label: "Extention", icon: "fas fa-building" },
+    { to: "/admin/floors", label: "Floors", icon: "fas fa-building" },
+  { to: "/admin/kothi", label: "Kothi", icon: "fas fa-building" },
+  { to: "/admin/mcd", label: "MCD", icon: "fas fa-building" },
+  { to: "/admin/parties", label: "Parties", icon: "fas fa-building" },
+  { to: "/admin/rentAts", label: "RentAts", icon: "fas fa-building" },
+  { to: "/admin/flats", label: "Flats", icon: "fas fa-building" },
+
   { to: "/broker/dashboard", label: "Dashboard", icon: "fa-th-large" },
   { to: "/broker/crm", label: "CRM", icon: "fa-address-book" },
   { to: "/broker/properties", label: "Properties", icon: "fa-building" },

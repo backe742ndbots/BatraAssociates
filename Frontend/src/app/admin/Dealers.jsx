@@ -230,7 +230,7 @@ import api from "../../services/api";
 import AdminLayout from "../../components/layout/AdminLayout";
 import SectionHeader from "./components/SectionHeader";
 import { useNavigate } from "react-router-dom";
-
+import BrokerLayout from "../../components/layout/BrokerLayout";
 export default function Dealers() {
   const type = "dealers";
   const navigate = useNavigate();
@@ -312,7 +312,7 @@ export default function Dealers() {
   };
 
   return (
-    <AdminLayout>
+    <BrokerLayout>
       <SectionHeader
         title="Dealers"
         subtitle="Complete dealer directory"
@@ -487,6 +487,6 @@ export default function Dealers() {
           BackendBots
         </span>
       </p>
-    </AdminLayout>
+    </BrokerLayout>
   );
 }

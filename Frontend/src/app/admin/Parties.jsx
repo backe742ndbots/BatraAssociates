@@ -298,7 +298,7 @@ import api from "../../services/api";
 import AdminLayout from "../../components/layout/AdminLayout";
 import SectionHeader from "./components/SectionHeader";
 import { useNavigate } from "react-router-dom";
-
+import BrokerLayout from "../../components/layout/BrokerLayout";
 export default function Parties() {
   const type = "parties";
   const navigate = useNavigate();
@@ -367,7 +367,7 @@ export default function Parties() {
   };
 
   return (
-    <AdminLayout>
+    <BrokerLayout>
       <SectionHeader
         title="Party Inquiries"
         subtitle="Client requirements & follow-ups"
@@ -591,6 +591,6 @@ export default function Parties() {
           ))}
         </div>
       )}
-    </AdminLayout>
+    </BrokerLayout>
   );
 }

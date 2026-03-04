@@ -284,7 +284,7 @@ import api from "../../services/api";
 import AdminLayout from "../../components/layout/AdminLayout";
 import SectionHeader from "./components/SectionHeader";
 import { useNavigate } from "react-router-dom";
-
+import BrokerLayout from "../../components/layout/BrokerLayout";
 export default function MCD() {
   const type = "mcd";
   const navigate = useNavigate();
@@ -356,7 +356,7 @@ export default function MCD() {
   };
 
   return (
-    <AdminLayout>
+    <BrokerLayout>
       <SectionHeader
         title="MCD Records"
         subtitle="Municipal booking & demolition records"
@@ -580,6 +580,6 @@ export default function MCD() {
           BackendBots
         </span>
       </p>
-    </AdminLayout>
+    </BrokerLayout>
   );
 }

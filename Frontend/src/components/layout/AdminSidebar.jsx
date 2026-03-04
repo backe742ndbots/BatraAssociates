@@ -6,7 +6,7 @@ const MENU = [
   // { to: "/admin/properties", label: "Properties", icon: "fas fa-building" },
   // { to: "/admin/dealers", label: "Dealers", icon: "fas fa-building" },
   // { to: "/admin/extention", label: "Extention", icon: "fas fa-building" },
-  { to: "/admin/flats", label: "Data", icon: "fas fa-building" },
+  { to: "/admin/data", label: "Data", icon: "fas fa-building" },
   // { to: "/admin/floors", label: "Floors", icon: "fas fa-building" },
   // { to: "/admin/kothi", label: "Kothi", icon: "fas fa-building" },
   // { to: "/admin/mcd", label: "MCD", icon: "fas fa-building" },
