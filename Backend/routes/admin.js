@@ -27,98 +27,83 @@ router.get(
 
 router.get(
   "/dealers",
-  verifyToken,
-  isAdmin,
+ 
   propertyController.getAllDealersAdmin
 );
 router.get(
   "/dealers/meta",
-  verifyToken,
-  isAdmin,
+
   propertyController.getDealerMeta
 );
 router.get(
   "/extentions",
-  verifyToken,
-  isAdmin,
+ 
   propertyController.getAllExtentionsAdmin
 );
 
 router.get(
   "/extentions/meta",
-  verifyToken,
-  isAdmin,
+  
   propertyController.getExtentionMeta
 );
 
 router.get(
   "/flats",
-  verifyToken,
-  isAdmin,
+
   propertyController.getAllFlatsAdmin
 );
 
 router.get(
   "/floors",
-  verifyToken,
-  isAdmin,
+  
   propertyController.getAllFloorsAdmin
 );
 router.get(
   "/floors/meta",
-  verifyToken,
-  isAdmin,
+
   propertyController.getFloorMeta
 );
 
 
 router.get(
   "/kothis",
-  verifyToken,
-  isAdmin,
+ 
   propertyController.getAllKothis
 );
 
 router.get(
   "/kothis/meta",
-  verifyToken,
-  isAdmin,
+ 
   propertyController.getKothiMeta
 );
 
 
 router.get(
   "/mcd",
-  verifyToken,
-  isAdmin,
+
   propertyController.getAllMCD
 );
 
 router.get(
   "/mcd/meta",
-  verifyToken,
-  isAdmin,
+
   propertyController.getMCDMeta
 );
 
 
-router.get("/parties",  verifyToken,
-  isAdmin, propertyController.getAllPartiesAdmin);
-router.get("/parties/meta",  verifyToken,
-  isAdmin, propertyController.getPartyMeta);
+router.get("/parties", propertyController.getAllPartiesAdmin);
+router.get("/parties/meta",  propertyController.getPartyMeta);
 
 
 router.get(
   "/rentats",
-  verifyToken,
-  isAdmin,
+
   propertyController.getRentAts
 );
 
 router.get(
   "/rentats/meta",
-  verifyToken,
-  isAdmin,
+
   propertyController.getRentAtsMeta
 );
 
